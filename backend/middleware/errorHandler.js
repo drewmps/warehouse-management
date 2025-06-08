@@ -4,7 +4,7 @@ function errorHandler(err, req, res, next) {
     case "SequelizeValidationError":
     case "SequelizeUniqueConstraintError":
       res.status(400).json({
-        message: err.message,
+        message: err.errors[0].message,
       });
       return;
     case "BadRequest":
