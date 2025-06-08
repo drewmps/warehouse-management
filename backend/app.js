@@ -8,12 +8,15 @@ const cors = require("cors");
 const EmployeeController = require("./controllers/EmployeeController");
 const errorHandler = require("./middleware/errorHandler");
 const ProductController = require("./controllers/ProductController");
+const authentication = require("./middleware/authentication");
 
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.post("/login", EmployeeController.login);
+
+app.use(authentication);
 app.post("/register", EmployeeController.addEmployee);
 app.get("/products", ProductController.getProducts);
 app.get("/products/:id", ProductController.getProductById);
