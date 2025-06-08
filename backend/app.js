@@ -9,9 +9,11 @@ const EmployeeController = require("./controllers/EmployeeController");
 const errorHandler = require("./middleware/errorHandler");
 const ProductController = require("./controllers/ProductController");
 const authentication = require("./middleware/authentication");
+const multerInit = require("./helpers/multerHelper");
 
 app.use(cors());
-app.use(express.urlencoded({ extended: false }));
+const upload = multerInit();
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.post("/login", EmployeeController.login);
@@ -20,6 +22,9 @@ app.use(authentication);
 app.post("/register", EmployeeController.addEmployee);
 app.get("/products", ProductController.getProducts);
 app.get("/products/:id", ProductController.getProductById);
+
+app.post("/products", upload.single("file"), ProductController.createProduct);
+
 app.use(errorHandler);
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

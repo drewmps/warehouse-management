@@ -1,5 +1,22 @@
+const multer = require("multer");
 function errorHandler(err, req, res, next) {
   console.log("🚀 ~ errorHandler ~ err:", err);
+  if (err instanceof multer.MulterError) {
+    if (err.code === "LIMIT_FILE_SIZE") {
+      return res
+        .status(400)
+        .json({ message: "File too large. Max 1MB allowed." });
+    }
+    if (err.code === "LIMIT_FILE_COUNT") {
+      return res.status(400).json({ message: "Only 1 file is allowed" });
+    }
+    if (err.code === "LIMIT_UNEXPECTED_FILE") {
+      return res.status(400).json({
+        message: "Only .jpeg, .png, and .webp files are allowed.",
+      });
+    }
+    return res.status(400).json({ message: err.message });
+  }
   switch (err.name) {
     case "SequelizeValidationError":
     case "SequelizeUniqueConstraintError":

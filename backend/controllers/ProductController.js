@@ -1,5 +1,41 @@
+const multer = require("multer");
+
 const { Product, Category } = require("../models");
+const cloudinary = require("../helpers/cloudinaryHelper");
 class ProductController {
+  static async createProduct(req, res, next) {
+    try {
+      const { name, price, categoryId } = req.body;
+      if (!req.file) {
+        throw {
+          name: "BadRequest",
+          message: "please select an image",
+        };
+      }
+
+      const mimeType = req.file.mimetype;
+      const base64Image = req.file.buffer.toString("base64");
+      const result = await cloudinary.uploader.upload(
+        `data:${mimeType};base64,${base64Image}`,
+        {
+          folder: "warehouse",
+          public_id: req.file.originalname,
+        }
+      );
+
+      const product = await Product.create({
+        name,
+        price,
+        imgUrl: result.secure_url,
+        categoryId,
+      });
+      res.status(201).json({ message: "product has been added" });
+    } catch (err) {
+      console.log("🚀 ~ ProductController ~ createProduct ~ error:", err);
+      next(err);
+    }
+  }
+
   static async getProducts(req, res, next) {
     try {
       const { filterCategory, q, page, sort } = req.query;
