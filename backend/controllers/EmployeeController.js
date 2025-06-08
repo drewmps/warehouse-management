@@ -40,7 +40,7 @@ class EmployeeController {
 
       res.cookie("access_token", access_token, {
         httpOnly: true,
-        secure: false,
+        secure: true,
         sameSite: "none",
         maxAge: 60 * 60 * 1000,
       });
@@ -56,7 +56,7 @@ class EmployeeController {
   static async logout(req, res, next) {
     res.cookie("access_token", "", {
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: "none",
       maxAge: 0,
     });
