@@ -1,12 +1,12 @@
 const { verifyToken } = require("../helpers/jwt");
 const { Employee } = require("../models");
 async function authentication(req, res, next) {
-  const bearerToken = req.headers.authorization;
-  if (!bearerToken) {
+  const cookies = req.cookies;
+  if (!cookies) {
     throw { name: "Unauthorized", message: "invalid token" };
   }
 
-  const [, token] = bearerToken.split(" ");
+  const token = cookies.access_token;
   if (!token) {
     throw { name: "Unauthorized", message: "invalid token" };
   }

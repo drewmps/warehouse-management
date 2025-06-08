@@ -12,11 +12,12 @@ const authentication = require("./middleware/authentication");
 const multerInit = require("./helpers/multerHelper");
 const helmet = require("helmet");
 const authorization = require("./middleware/authorization");
+const cookieParser = require("cookie-parser");
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://your-frontend.com"], // your frontend URLs
-    credentials: true, // if sending cookies or auth headers
+    origin: ["http://localhost:5173", "https://your-frontend.com"],
+    credentials: true,
   })
 );
 app.use(
@@ -36,11 +37,14 @@ app.use(
   })
 );
 
+app.use(cookieParser());
+
 const upload = multerInit();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.post("/login", EmployeeController.login);
+app.post("/logout", EmployeeController.logout);
 
 app.use(authentication);
 app.post("/register", EmployeeController.addEmployee);

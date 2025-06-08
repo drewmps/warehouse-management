@@ -41,6 +41,9 @@ function errorHandler(err, req, res, next) {
     case "JsonWebTokenError":
       res.status(401).json({ message: "invalid token" });
       return;
+    case "TokenExpiredError":
+      res.status(401).json({ message: "invalid token" });
+      return;
     default:
       res.status(500).json({ message: "internal server error" });
   }
