@@ -49,6 +49,12 @@ app.get("/products/:id", ProductController.getProductById);
 
 app.post("/products", upload.single("file"), ProductController.createProduct);
 app.delete("/products/:id", authorization, ProductController.deleteProductById);
+app.put(
+  "/products/:id",
+  authorization,
+  upload.single("file"),
+  ProductController.editProductById
+);
 
 app.use(errorHandler);
 app.listen(port, () => {
