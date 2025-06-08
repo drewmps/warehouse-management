@@ -2,6 +2,19 @@ const { comparePassword } = require("../helpers/bcrypt");
 const { signToken } = require("../helpers/jwt");
 const { Employee } = require("../models");
 class EmployeeController {
+  static async addEmployee(req, res, next) {
+    try {
+      const { email, password } = req.body;
+
+      await Employee.create({
+        email,
+        password,
+      });
+      res.status(201).json({ message: "a new employee has been added" });
+    } catch (error) {
+      next(error);
+    }
+  }
   static async login(req, res, next) {
     try {
       const { email, password } = req.body;

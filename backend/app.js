@@ -13,6 +13,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.post("/login", EmployeeController.login);
+app.post("/register", EmployeeController.addEmployee);
 app.use(errorHandler);
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
