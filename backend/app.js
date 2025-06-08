@@ -10,6 +10,7 @@ const errorHandler = require("./middleware/errorHandler");
 const ProductController = require("./controllers/ProductController");
 const authentication = require("./middleware/authentication");
 const multerInit = require("./helpers/multerHelper");
+const helmet = require("helmet");
 
 app.use(
   cors({
@@ -17,6 +18,23 @@ app.use(
     credentials: true, // if sending cookies or auth headers
   })
 );
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+  })
+);
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      imgSrc: ["'self'", "data:", "https://res.cloudinary.com"],
+      connectSrc: ["'self'", "https://api.cloudinary.com"],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+    },
+  })
+);
+
 const upload = multerInit();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
