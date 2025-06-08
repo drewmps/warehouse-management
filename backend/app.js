@@ -16,6 +16,7 @@ app.use(express.json());
 app.post("/login", EmployeeController.login);
 app.post("/register", EmployeeController.addEmployee);
 app.get("/products", ProductController.getProducts);
+app.get("/products/:id", ProductController.getProductById);
 app.use(errorHandler);
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
