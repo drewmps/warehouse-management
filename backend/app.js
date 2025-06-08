@@ -11,6 +11,7 @@ const ProductController = require("./controllers/ProductController");
 const authentication = require("./middleware/authentication");
 const multerInit = require("./helpers/multerHelper");
 const helmet = require("helmet");
+const authorization = require("./middleware/authorization");
 
 app.use(
   cors({
@@ -47,6 +48,7 @@ app.get("/products", ProductController.getProducts);
 app.get("/products/:id", ProductController.getProductById);
 
 app.post("/products", upload.single("file"), ProductController.createProduct);
+app.delete("/products/:id", authorization, ProductController.deleteProductById);
 
 app.use(errorHandler);
 app.listen(port, () => {

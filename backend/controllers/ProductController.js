@@ -23,7 +23,7 @@ class ProductController {
         }
       );
 
-      const product = await Product.create({
+      await Product.create({
         name,
         price,
         imgUrl: result.secure_url,
@@ -89,6 +89,25 @@ class ProductController {
       }
 
       res.status(200).json(product);
+    } catch (error) {
+      console.log("🚀 ~ ProductController ~ getProductById ~ error:", error);
+      next(error);
+    }
+  }
+
+  static async deleteProductById(req, res, next) {
+    try {
+      let { id } = req.params;
+
+      const product = await Product.findByPk(id);
+      if (!product) {
+        throw { name: "NotFound", message: "product not found" };
+      }
+
+      await product.destroy();
+      res
+        .status(200)
+        .json({ message: "product has been successfully deleted" });
     } catch (error) {
       console.log("🚀 ~ ProductController ~ getProductById ~ error:", error);
       next(error);
