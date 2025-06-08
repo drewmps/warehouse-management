@@ -46,11 +46,6 @@ module.exports = (sequelize, DataTypes) => {
             args: [5, Infinity],
             msg: "minimal password length is 5 characters",
           },
-          isFilledWithSpaces(value) {
-            if (!value.trim()) {
-              throw new Error("password cannot be spaces only");
-            }
-          },
         },
       },
       role: { type: DataTypes.STRING, defaultValue: "Staff" },
