@@ -11,7 +11,12 @@ const ProductController = require("./controllers/ProductController");
 const authentication = require("./middleware/authentication");
 const multerInit = require("./helpers/multerHelper");
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "https://your-frontend.com"], // your frontend URLs
+    credentials: true, // if sending cookies or auth headers
+  })
+);
 const upload = multerInit();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
