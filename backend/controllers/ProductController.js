@@ -6,6 +6,12 @@ class ProductController {
   static async createProduct(req, res, next) {
     try {
       const { name, price, categoryId } = req.body;
+
+      const category = await Category.findByPk(categoryId);
+      if (!category) {
+        throw { name: "NotFound", message: "category not found" };
+      }
+
       if (!req.file) {
         throw {
           name: "BadRequest",
