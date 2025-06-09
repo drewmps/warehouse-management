@@ -14,15 +14,7 @@ const helmet = require("helmet");
 const authorization = require("./middleware/authorization");
 const cookieParser = require("cookie-parser");
 
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "https://warehouse-frontend-d5ef1.web.app/",
-    ],
-    credentials: true,
-  })
-);
+app.use(cors());
 app.use(
   helmet({
     crossOriginResourcePolicy: { policy: "cross-origin" },
