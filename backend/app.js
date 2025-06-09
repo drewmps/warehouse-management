@@ -16,7 +16,10 @@ const cookieParser = require("cookie-parser");
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://your-frontend.com"],
+    origin: [
+      "http://localhost:5173",
+      "https://warehouse-frontend-d5ef1.web.app/",
+    ],
     credentials: true,
   })
 );
