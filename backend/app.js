@@ -44,7 +44,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.post("/login", EmployeeController.login);
-app.post("/logout", EmployeeController.logout);
 
 app.use(authentication);
 app.post("/register", EmployeeController.addEmployee);
