@@ -6,6 +6,9 @@ class ProductController {
   static async createProduct(req, res, next) {
     try {
       const { name, price, categoryId } = req.body;
+      if (!categoryId) {
+        throw { name: "BadRequest", message: "category is required" };
+      }
 
       const category = await Category.findByPk(categoryId);
       if (!category) {
