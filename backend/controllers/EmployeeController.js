@@ -2,6 +2,12 @@ const { comparePassword } = require("../helpers/bcrypt");
 const { signToken } = require("../helpers/jwt");
 const { Employee } = require("../models");
 class EmployeeController {
+  static async getCurrentlyLoggedInEmployee(req, res, next) {
+    res.json({
+      id: req.user.id,
+      role: req.user.role,
+    });
+  }
   static async addEmployee(req, res, next) {
     try {
       const { email, password } = req.body;
