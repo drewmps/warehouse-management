@@ -44,10 +44,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.post("/login", EmployeeController.login);
-app.post("/logout", EmployeeController.logout);
 
 app.use(authentication);
-app.get("/me", EmployeeController.getCurrentlyLoggedInEmployee);
 app.post("/register", EmployeeController.addEmployee);
 app.get("/products", ProductController.getProducts);
 app.get("/products/:id", ProductController.getProductById);

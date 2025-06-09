@@ -2,12 +2,6 @@ const { comparePassword } = require("../helpers/bcrypt");
 const { signToken } = require("../helpers/jwt");
 const { Employee } = require("../models");
 class EmployeeController {
-  static async getCurrentlyLoggedInEmployee(req, res, next) {
-    res.json({
-      id: req.user.id,
-      role: req.user.role,
-    });
-  }
   static async addEmployee(req, res, next) {
     try {
       const { email, password } = req.body;
@@ -44,29 +38,13 @@ class EmployeeController {
 
       const access_token = signToken({ id: employee.id });
 
-      res.cookie("access_token", access_token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-        maxAge: 60 * 60 * 1000,
-      });
-
       res.status(200).json({
+        access_token,
         role: employee.role,
       });
     } catch (error) {
       next(error);
     }
-  }
-
-  static async logout(req, res, next) {
-    res.cookie("access_token", "", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      maxAge: 0,
-    });
-    res.status(200).json({ message: "Logged out successfully" });
   }
 }
 module.exports = EmployeeController;
