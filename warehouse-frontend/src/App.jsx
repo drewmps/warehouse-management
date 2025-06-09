@@ -3,6 +3,8 @@ import LoginPage from "./pages/Login.page";
 import PublicRoute from "./guards/PublicRoute";
 import PrivateRoute from "./guards/PrivateRoute";
 import DashboardPage from "./pages/Dashboard.page";
+import AddProductPage from "./pages/AddProduct.page";
+import EditProductPage from "./pages/EditProduct.page";
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
 
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<DashboardPage />} />
+          <Route path="/add-product" element={<AddProductPage />} />
+          <Route path="edit-product/:id" element={<EditProductPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
